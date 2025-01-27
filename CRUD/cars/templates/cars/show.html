@@ -1,0 +1,43 @@
+{% extends 'cars/base.html' %}
+{% block content %} 
+ 
+ <!-- <div class="row d-flex justify-content-center"> -->
+ <div class="row">
+    <div class="col-sm-8">
+        <h5 class=" alert alert-info">Show Cars Info:</h5>
+        {% if Show_data %}
+           <h5>Table Date:</h5>
+           <table class="table table-hover">
+            <thead>
+                <th scope="col">ID</th>
+                <th scope="col">CAR NAME</th>
+                <th scope="col">CAR MODEL</th>
+                <th scope="col">CAR SPEED</th>
+                <th scope="col">Action</th>
+            </thead>
+            <tbody>
+                {% for sd in Show_data %}
+                <tr>
+                    <td scope="row">{{sd.id}}</td>
+                    <td>{{sd.car_name}}</td>
+                    <td>{{sd.car_model}}</td>
+                    <td>{{sd.car_speed}}</td>
+                    <td>
+                        <a href="{% url 'update_data' sd.id %}" class="btn btn-warning btn-sm">Edit</a>
+
+                        <form action="{% url 'delete_data' sd.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-danger btn sm" value="Delete">
+                        </form>      
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+        <h5 class="text-center alert alert-warning">No Data.</h5>
+        {% endif %}
+    </div>
+ </div>
+
+{% endblock content %}
